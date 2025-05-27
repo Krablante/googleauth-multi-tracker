@@ -1,5 +1,3 @@
-# googleauth-multi-tracker
-A simple book tracker
 # Reading Tracker
 
 A simple, offline-capable PWA for tracking books/articles **and** films/series. Built with React, TypeScript, and Firebase, it lets you sign in with Google, add entries by date and title, and view them grouped by day under two categories: **READ** and **FILMS**.
