@@ -1,3 +1,4 @@
+// src/components/EntryForm.tsx
 import React, { useState } from 'react';
 import { Category } from './Tabs';
 
@@ -20,9 +21,16 @@ const EntryForm: React.FC<EntryFormProps> = ({ activeCategory, onAdd }) => {
     setDate(today);
   };
 
+  const openPicker = () => {
+    const input = document.getElementById('date-input') as HTMLInputElement | null;
+    if (input && typeof input.showPicker === 'function') {
+      input.showPicker();
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit} className="entry-form">
-      <div>
+      {/* полностью скрытый инпут */}
       <input
         type="date"
         id="date-input"
@@ -31,23 +39,25 @@ const EntryForm: React.FC<EntryFormProps> = ({ activeCategory, onAdd }) => {
         onChange={e => setDate(e.target.value)}
       />
 
-      {/* <input
-          type="date"
-          value={date}
-          onChange={e => setDate(e.target.value)}
-          required
-        /> */}
-      </div>
-      <div>
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={e => setTitle(e.target.value)}
-          required
-        />
-      </div>
-      <button type="submit">A</button>
+      <button
+        type="button"
+        className="date-btn"
+        onClick={openPicker}
+        aria-label="Select date"
+      >
+        📅
+      </button>
+
+      <input
+        type="text"
+        placeholder="Title"
+        value={title}
+        onChange={e => setTitle(e.target.value)}
+        className="title-input"
+        required
+      />
+
+      <button type="submit" className="submit-btn">A</button>
     </form>
   );
 };

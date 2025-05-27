@@ -8,19 +8,16 @@ interface Props {
 }
 
 const EntriesList: React.FC<Props> = ({ entries, onRemove }) => {
-  // сгруппируем по дате
   const groups = entries.reduce<Record<string, Entry[]>>((acc, entry) => {
     (acc[entry.date] ||= []).push(entry);
     return acc;
   }, {});
 
-  // отсортируем даты по убыванию (новые наверху)
   const sortedDates = Object.keys(groups).sort((a, b) => (a < b ? 1 : -1));
 
   return (
     <ul id="entries">
       {sortedDates.map(date => {
-        // превратим "2025-05-27" в "27.05.2025"
         const [y, m, d] = date.split('-');
         const formatted = `${d}.${m}.${y}`;
 

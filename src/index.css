@@ -38,7 +38,6 @@ body {
   padding: 0 1rem;
 }
 
-/* === Шапка и тема === */
 .header {
   display: flex;
   align-items: center;
@@ -59,7 +58,6 @@ h1 {
   color: var(--text);
 }
 
-/* === Табы === */
 .tabs {
   display: flex;
   gap: 1rem;
@@ -84,7 +82,6 @@ h1 {
   color: white;
 }
 
-/* === Форма ввода === */
 .entry-form {
   display: flex;
   gap: 0.5rem;
@@ -143,7 +140,6 @@ h1 {
   background: var(--btn-bg-hover);
 }
 
-/* === Список записей === */
 #entries {
   list-style: none;
   padding: 0;
@@ -183,7 +179,6 @@ h1 {
   color: #e74c3c;
 }
 
-/* === Пользовательские стили === */
 .user-icon {
   border: none;
   background: transparent;
@@ -210,9 +205,108 @@ h1 {
   padding: 0.5rem;
 }
 
-/* === Адаптив === */
 @media (max-width: 480px) {
   .entry-form {
     justify-content: center;
+  }
+}
+
+.login-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: var(--bg);
+}
+.login-card {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--card-shadow);
+  text-align: center;
+}
+.google-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.google-btn img {
+  width: 20px;
+  height: 20px;
+}
+.google-btn:hover {
+  background: #f7f7f7;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.date-btn {
+  padding: 0.5rem;
+  border: 1px solid var(--input-border);
+  border-radius: 50%;
+  background: var(--date-btn-bg);
+  color: var(--text);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.date-btn:hover {
+  background: var(--date-btn-hover);
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .tab {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .date-btn {
+    font-size: 0.9rem;
+    padding: 0.4rem;
+  }
+
+  .title-input {
+    font-size: 0.9rem;
+  }
+
+  .submit-btn {
+    font-size: 1rem;
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .entry-group .date {
+    font-size: 1rem;
+  }
+
+  .entry-form {
+    gap: 0.4rem;
   }
 }

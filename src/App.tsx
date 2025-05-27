@@ -7,13 +7,18 @@ import MainApp from './MainApp';
 function AppInner() {
   const { user, signIn } = useAuth();
   if (!user) {
-    return (
-      <div style={{ textAlign: 'center', marginTop: '4rem' }}>
-        <h2>Пожалуйста, войдите через Google</h2>
-        <button onClick={signIn}>Войти</button>
-      </div>
-    );
-  }
+      return (
+        <div className="login-screen">
+          <div className="login-card">
+            <h2>Please sign in with Google</h2>
+            <button className="google-btn" onClick={signIn}>
+              <img src="/google-logo.svg" alt="Google logo" />
+              Login with Google
+            </button>
+          </div>
+        </div>
+      );
+    }
   return (
     <EntryServiceProvider>
       <MainApp />

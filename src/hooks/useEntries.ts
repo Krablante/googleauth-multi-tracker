@@ -7,7 +7,6 @@ export function useEntries() {
   const [entries, setEntries] = useState<Entry[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  // подписка при монтировании
   useEffect(() => {
     const unsub = service.subscribe(
       setEntries,

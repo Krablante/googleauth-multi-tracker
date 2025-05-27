@@ -28,11 +28,9 @@ const MainApp: React.FC = () => {
 
   return (
     <div className="container">
-      {/* Шапка */}
       <div className="header">
-        <h1>Reading Tracker</h1>
+        <h1>Tracker</h1>
         <div className="header-controls">
-          {/* Переключатель темы */}
           <button
             className="theme-btn"
             onClick={() => setTheme((t) => (t === 'light' ? 'dark' : 'light'))}
@@ -41,7 +39,6 @@ const MainApp: React.FC = () => {
             {theme === 'light' ? '🌙' : '☀️'}
           </button>
 
-          {/* Аватарка пользователя (клик — выход) */}
           <button
             className="user-icon"
             aria-label="Sign out"
@@ -52,16 +49,12 @@ const MainApp: React.FC = () => {
         </div>
       </div>
 
-      {/* Табы */}
       <Tabs active={category} onChange={setCategory} />
 
-      {/* Форма */}
       <EntryForm activeCategory={category} onAdd={addEntry} />
 
-      {/* Ошибка */}
       {error && <div className="error">Ошибка: {error}</div>}
 
-      {/* Список */}
       <EntriesList entries={filtered} onRemove={removeEntry} />
     </div>
   );
