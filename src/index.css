@@ -1,0 +1,218 @@
+:root {
+  --bg: #f0f2f5;
+  --text: #333;
+  --btn-bg: #4a90e2;
+  --btn-bg-hover: #357ab8;
+  --card-bg: #fff;
+  --card-shadow: rgba(0,0,0,0.1);
+  --input-border: #ccc;
+  --input-border-focus: #4a90e2;
+  --date-input-bg: var(--date-btn-bg);
+  --date-input-hover: var(--date-btn-hover);
+}
+
+html[data-theme="dark"] {
+  --bg: #1e1e1e;
+  --text: #eee;
+  --btn-bg: #555;
+  --btn-bg-hover: #444;
+  --card-bg: #2a2a2a;
+  --card-shadow: rgba(0,0,0,0.5);
+  --input-border: #555;
+  --input-border-focus: #888;
+  --date-input-bg: var(--date-btn-bg);
+  --date-input-hover: var(--date-btn-hover);
+}
+
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* === Шапка и тема === */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header-controls {
+  display: flex;
+  align-items: center;
+}
+h1 {
+  margin: 0;
+}
+.theme-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text);
+}
+
+/* === Табы === */
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+.tab {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--input-border);
+  border-radius: 9999px;
+  background: var(--card-bg);
+  color: var(--text);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.tab:hover {
+  background: var(--date-input-hover);
+}
+.tab--active {
+  background: var(--btn-bg);
+  border-color: var(--btn-bg);
+  color: white;
+}
+
+/* === Форма ввода === */
+.entry-form {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.entry-form input[type="date"] {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--input-border);
+  border-radius: 6px;
+  background: var(--date-input-bg);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  flex: 0 0 auto;
+}
+.entry-form input[type="date"]:hover {
+  background: var(--date-input-hover);
+}
+
+.entry-form input[type="text"] {
+  flex: 1;
+  min-width: 0;
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: 1px solid var(--input-border);
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: var(--text);
+  transition: border-color 0.2s;
+}
+.entry-form input[type="text"]:focus {
+  outline: none;
+  border-color: var(--input-border-focus);
+}
+
+.entry-form button[type="submit"] {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  border: none;
+  cursor: pointer;
+  background: var(--btn-bg);
+  color: white;
+  transition: background 0.2s;
+  flex: 0 0 auto;
+}
+.entry-form button[type="submit"]:hover {
+  background: var(--btn-bg-hover);
+}
+
+/* === Список записей === */
+#entries {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.entry-group {
+  background: var(--card-bg);
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px var(--card-shadow);
+}
+.entry-group .date {
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+}
+.entry-group .items {
+  margin-top: 0.75rem;
+}
+.entry-group .item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+.entry-group .item:last-child {
+  margin-bottom: 0;
+}
+.delete-btn {
+  border: none;
+  background: transparent;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.delete-btn:hover {
+  color: #e74c3c;
+}
+
+/* === Пользовательские стили === */
+.user-icon {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin-left: 0.5rem;
+  position: relative;
+  cursor: pointer;
+}
+.user-icon img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 40px;
+  background: var(--card-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 6px;
+  box-shadow: 0 2px 5px var(--card-shadow);
+  padding: 0.5rem;
+}
+
+/* === Адаптив === */
+@media (max-width: 480px) {
+  .entry-form {
+    justify-content: center;
+  }
+}
