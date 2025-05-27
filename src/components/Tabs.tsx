@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type Category = 'read' | 'films';
+export type Category = 'read' | 'read_wish' | 'films' | 'films_wish';
 
 interface TabsProps {
   active: Category;
@@ -8,8 +8,10 @@ interface TabsProps {
 }
 
 const TABS: { key: Category; label: string }[] = [
-  { key: 'read',  label: 'READ'  },
-  { key: 'films', label: 'FILMS' },
+  { key: 'read',       label: 'READ'     },
+  { key: 'read_wish',  label: 'READ (W)' },
+  { key: 'films',      label: 'FILMS'    },
+  { key: 'films_wish', label: 'FILMS (W)' },
 ];
 
 const Tabs: React.FC<TabsProps> = ({ active, onChange }) => (

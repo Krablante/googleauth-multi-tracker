@@ -10,6 +10,8 @@ import {
   addDoc,
   deleteDoc,
   doc,
+  serverTimestamp,
+  orderBy,
 } from 'firebase/firestore';
 
 export class FirestoreEntryService implements EntryService {
@@ -23,7 +25,8 @@ export class FirestoreEntryService implements EntryService {
   subscribe(onUpdate: (entries: Entry[]) => void, onError?: (e: Error) => void) {
     const q = query(
       collection(this.db, 'readings'),
-      where('owner', '==', this.uid)
+      where('owner', '==', this.uid),
+      orderBy('createdAt', 'desc')
     );
     const unsub = onSnapshot(
       q,
@@ -40,9 +43,11 @@ export class FirestoreEntryService implements EntryService {
   }
 
   async add(entry: Omit<Entry, 'id'>): Promise<Entry> {
+    // добавляем запись с серверным timestamp
     const ref = await addDoc(collection(this.db, 'readings'), {
       owner: this.uid,
       ...entry,
+      createdAt: serverTimestamp(),
     });
     return { id: ref.id, ...entry };
   }

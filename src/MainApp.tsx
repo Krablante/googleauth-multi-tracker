@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Tabs, { Category } from './components/Tabs';
 import EntryForm from './components/EntryForm';
 import EntriesList from './components/EntriesList';
+import WishlistEntriesList from './components/WishlistEntriesList'; // ← новый импорт
 import { useEntries } from './hooks/useEntries';
 import { useAuth } from './contexts/AuthContext';
 
@@ -10,7 +11,7 @@ const MainApp: React.FC = () => {
   const { user, signOut } = useAuth();
   const [category, setCategory] = useState<Category>('read');
 
-  // 1) Тема
+  // тема
   const [theme, setTheme] = useState<'light' | 'dark'>(
     (localStorage.getItem('theme') as 'light' | 'dark') || 'light'
   );
@@ -19,11 +20,27 @@ const MainApp: React.FC = () => {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
-  // 2) Записи
+  // записи
   const { entries, addEntry, removeEntry, error } = useEntries();
-  const filtered = entries.filter((e) => e.category === category);
+  const filtered = entries.filter(e => e.category === category);
 
-  // Источник аватара (с fallback)
+  // 4. markAsDone: перенос из вишлиста в основную категорию
+  const markAsDone = async (entry: typeof filtered[0]) => {
+    const targetCat: Category =
+      entry.category === 'read_wish' ? 'read' : 'films';
+    const today = new Date().toISOString().slice(0, 10);
+
+    // создаём новую запись в основной вкладке
+    await addEntry({
+      date: today,
+      title: entry.title,
+      category: targetCat,
+    });
+    // удаляем из вишлиста
+    await removeEntry(entry.id);
+  };
+
+  // аватар
   const avatarSrc = user?.photoURL || '/default-U-icon.svg';
 
   return (
@@ -33,17 +50,12 @@ const MainApp: React.FC = () => {
         <div className="header-controls">
           <button
             className="theme-btn"
-            onClick={() => setTheme((t) => (t === 'light' ? 'dark' : 'light'))}
+            onClick={() => setTheme(t => (t === 'light' ? 'dark' : 'light'))}
             aria-label="Toggle theme"
           >
             {theme === 'light' ? '🌙' : '☀️'}
           </button>
-
-          <button
-            className="user-icon"
-            aria-label="Sign out"
-            onClick={signOut}
-          >
+          <button className="user-icon" aria-label="Sign out" onClick={signOut}>
             <img src={avatarSrc} alt="User avatar" />
           </button>
         </div>
@@ -55,7 +67,16 @@ const MainApp: React.FC = () => {
 
       {error && <div className="error">Ошибка: {error}</div>}
 
-      <EntriesList entries={filtered} onRemove={removeEntry} />
+      {/* 5. Условный рендер: обычные или вишлист */}
+      {category === 'read_wish' || category === 'films_wish' ? (
+        <WishlistEntriesList
+          entries={filtered}
+          onRemove={removeEntry}
+          onComplete={markAsDone}
+        />
+      ) : (
+        <EntriesList entries={filtered} onRemove={removeEntry} />
+      )}
     </div>
   );
 };
