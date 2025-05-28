@@ -574,3 +574,28 @@ html[data-theme="light"] .complete-btn:hover {
 .wishlist-item a.title:visited {
   color: var(--text);
 }
+
+
+/* круглые кнопки-стрелки для ResourcesList */
+.arrow-btn {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: none;
+  background: var(--card-bg);
+  color: var(--text);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition), opacity var(--transition);
+}
+.arrow-btn:hover:not(:disabled) {
+  background: var(--date-input-hover);
+}
+.arrow-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+  color: var(--input-border);
+}

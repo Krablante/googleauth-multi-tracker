@@ -5,9 +5,6 @@ import { ResourceEntry } from '../types';
 interface ResourcesListProps {
   entries: ResourceEntry[];
   onRemove: (id: string) => void;
-  /**
-   * Меняет местами порядок двух ресурсов по их ID
-   */
   onSwap: (id: string, otherId: string) => void;
 }
 
@@ -25,6 +22,7 @@ const ResourcesList: React.FC<ResourcesListProps> = ({ entries, onRemove, onSwap
         </a>
         <div className="actions">
           <button
+            className="arrow-btn"
             disabled={idx === 0}
             onClick={() => onSwap(e.id, entries[idx - 1].id)}
             title="Переместить вверх"
@@ -32,6 +30,7 @@ const ResourcesList: React.FC<ResourcesListProps> = ({ entries, onRemove, onSwap
             ↑
           </button>
           <button
+            className="arrow-btn"
             disabled={idx === entries.length - 1}
             onClick={() => onSwap(e.id, entries[idx + 1].id)}
             title="Переместить вниз"
