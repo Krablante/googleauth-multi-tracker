@@ -2,7 +2,6 @@
 
 A simple, PWA for tracking books/articles, films/series **and** custom web resources. Built with React, TypeScript, and Firebase, it lets you sign in with Google, add entries, manage wishlists and even bookmark your favorite sites or news feeds.
 
-<img src="https://your-domain.com/path/to/screenshot.png" alt="Screenshot" width="600" />
 
 ## Features
 
