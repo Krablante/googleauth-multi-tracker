@@ -1,45 +1,50 @@
-# Reading Tracker
+# Tracker
 
-A simple, offline-capable PWA for tracking books/articles **and** films/series. Built with React, TypeScript, and Firebase, it lets you sign in with Google, add entries, and view them under multiple categories.
+A simple, offline-capable PWA for tracking books/articles, films/series **and** custom web resources. Built with React, TypeScript, and Firebase, it lets you sign in with Google, add entries, manage wishlists and even bookmark your favorite sites or news feeds.
 
 <img src="https://your-domain.com/path/to/screenshot.png" alt="Screenshot" width="600"/>
 
 ## Features
 
 * 🔐 **Google Authentication** (only signed-in users can access)
-* 📚 **Four categories**:
+* 📚 **Five categories**:
 
   * **READ** (books & articles)
   * **READ (W)** (wishlist for books & articles; undated, move items to READ with today’s date)
   * **FILMS** (movies & TV shows)
   * **FILMS (W)** (wishlist for films & TV shows; undated, move items to FILMS with today’s date)
-* 📅 **Date picker** via calendar icon (for main categories)
-* ➕ **Add & remove** entries in real time with Firestore
-* ✔️ **Wishlist support**: mark items as done to transfer them with the current date
-* 🌙 **Light / Dark theme** toggle (saved in `localStorage`)
-* 📱 **Offline support** with a custom Service Worker
-* ⚡ **Deployable** on Vercel (CRA preset) or GitHub Pages
+  * **RESOURCES 📰** (custom links and news sites; add, reorder, and remove bookmarks)
+* ➕ **Add & remove** entries and resources in real time with Firestore
+* 🔀 **Reordering** for Resources: move bookmarks up or down to adjust priority
+* 📅 **Date picker** via calendar icon for READ & FILMS categories
+* ✔️ **Wishlist support**: mark items as done to move them into main lists with today’s date
+* 🌗 **Light / Dark theme** toggle (saved in `localStorage`)
+* 💾 **Offline support** via custom Service Worker
+* 📱 **Progressive Web App**: installable on desktop & mobile, offline-ready
+* ⚡ **Deployable** on Vercel or GitHub Pages
 
 ## Tech Stack
 
 * **React** + **TypeScript**
 * **Firebase** Authentication & Firestore database
-* **CSS Variables** for theming & responsive design
-* **Service Worker** for PWA offline cache
-* **Recharts** for future statistics dashboards
+* **CSS Variables** & responsive design
+* **Service Worker** for offline cache
+* **Recharts** ready for future dashboard charts
 
 ## Getting Started
 
 1. Clone the repo
 2. `npm install`
-3. Set up Firebase config in `src/contexts/AuthContext.tsx`
+3. Configure Firebase in `src/contexts/AuthContext.tsx`
 4. `npm start` to run locally
 
 ## Future Improvements
 
-* 📊 **Statistics dashboard**: charts for entries over time, read/films breakdown
-* 🔄 **Import / Export**: JSON/CSV backup and restore
+* 📊 **Statistics Dashboard**: visualize reading/watching patterns and resources over time
+* 🔄 **Import / Export**: JSON/CSV backup and restore of all entries and resources
+* 🏷️ **Tagging**: add tags to entries for advanced filtering
+* 🌐 **External Integrations**: Google Books API, OMDB/TMDB for metadata auto-fill
 
 ---
 
-Enjoy tracking your reading and watching habits!
+Enjoy tracking your reading, watching, and web explorations!

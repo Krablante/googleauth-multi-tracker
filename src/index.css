@@ -171,6 +171,11 @@ html[data-theme="light"] .tab:hover {
 .entry-group .item:last-child {
   margin-bottom: 0;
 }
+
+.entry-group .item .title {
+  padding-right: 10px;
+}
+
 .delete-btn {
   border: none;
   background: transparent;
@@ -481,3 +486,91 @@ html[data-theme="light"] .complete-btn:hover {
   }
 }
 
+/* src/index.css */
+
+/* контейнер для заголовка + иконки */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header-main {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* стили для кнопки-иконки */
+.icon-tab {
+  padding: 0.4rem;
+  border: 1px solid var(--input-border);
+  border-radius: 9999px;
+  background: var(--card-bg);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition);
+}
+.icon-tab:hover {
+  background: var(--date-input-hover);
+}
+.icon-tab.tab--active {
+  background: var(--btn-bg);
+  border-color: var(--btn-bg);
+  color: white;
+}
+
+
+/* Стили для URL-поля в ResourceForm */
+.entry-form input[type="url"] {
+  /* Не растягиваем так сильно, как текст, */
+  /* но задаём ту же «обёртку» */
+  flex: 0 0 200px;      /* желаемая ширина */
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: 1px solid var(--input-border);
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: var(--text);
+  transition: border-color var(--transition);
+}
+
+.entry-form input[type="url"]:focus {
+  outline: none;
+  border-color: var(--input-border-focus);
+}
+
+/* Если хотите, чтобы и текстовое поле для названия ресурса тоже */
+/* имело универсальную обёртку (не только input[type="text"]), */
+/* можно чуть расширить правило: */
+.entry-form .title-input {
+  /* те же стили, что у input[type="text"] */
+  /* (дублируется для уверенности) */
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: 1px solid var(--input-border);
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: var(--text);
+  transition: border-color var(--transition);
+}
+
+.entry-form .title-input:focus {
+  outline: none;
+  border-color: var(--input-border-focus);
+}
+
+/* Ссылки в списке ресурсов без синего/фиолетового, без подчеркивания */
+.wishlist-item a.title {
+  color: var(--text);      /* или любой другой «приятный» цвет */
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.wishlist-item a.title:hover {
+  text-decoration: underline;
+}
+
+/* Чтобы не было фиолетового после посещения */
+.wishlist-item a.title:visited {
+  color: var(--text);
+}

@@ -1,6 +1,8 @@
+// src/App.tsx
 import React from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { EntryServiceProvider } from './contexts/EntryServiceContext';
+import { ResourceServiceProvider } from './contexts/ResourceServiceContext';
 import MainApp from './MainApp';
 
 function AppInner() {
@@ -30,7 +32,9 @@ function AppInner() {
 
   return (
     <EntryServiceProvider>
-      <MainApp />
+      <ResourceServiceProvider>
+        <MainApp />
+      </ResourceServiceProvider>
     </EntryServiceProvider>
   );
 }

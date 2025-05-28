@@ -9,3 +9,12 @@ export interface Entry {
   category: Category;
   createdAt?: Timestamp;
 }
+
+// Новый интерфейс для хранения ресурсов (news, сайты и пр.)
+export interface ResourceEntry {
+  id: string;
+  title: string;
+  url: string;
+  order: number;            // Порядок отображения
+  createdAt?: Timestamp;     // Для первичной сортировки
+}

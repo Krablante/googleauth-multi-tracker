@@ -1,13 +1,15 @@
+// src/components/Tabs.tsx
 import React from 'react';
 
-export type Category = 'read' | 'read_wish' | 'films' | 'films_wish';
+// Разрешаем категорию ресурсов, но не будем её выводить в списке табов
+export type Category = 'read' | 'read_wish' | 'films' | 'films_wish' | 'resources';
 
 interface TabsProps {
   active: Category;
   onChange: (category: Category) => void;
 }
 
-const TABS: { key: Category; label: string }[] = [
+const TABS: { key: Exclude<Category, 'resources'>; label: string }[] = [
   { key: 'read',       label: 'READ'     },
   { key: 'read_wish',  label: 'READ (W)' },
   { key: 'films',      label: 'FILMS'    },
