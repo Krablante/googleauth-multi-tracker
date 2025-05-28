@@ -10,6 +10,7 @@ import { useEntries } from './hooks/useEntries';
 import { useResources } from './hooks/useResources';
 import { useAuth } from './contexts/AuthContext';
 import { Entry } from './types';
+import ImportExportModal from './components/ImportExportModal';
 
 const MainApp: React.FC = () => {
   const { user, signOut } = useAuth();
@@ -77,6 +78,9 @@ const MainApp: React.FC = () => {
           >
             {theme === 'light' ? '🌙' : '☀️'}
           </button>
+          {/* Import/Export */}
+          <ImportExportModal />
+          {/* Аватар + выход */}
           <button className="user-icon" aria-label="Sign out" onClick={signOut}>
             <img src={avatarSrc} alt="User avatar" />
           </button>

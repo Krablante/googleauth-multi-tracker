@@ -599,3 +599,116 @@ html[data-theme="light"] .complete-btn:hover {
   cursor: default;
   color: var(--input-border);
 }
+
+
+/* Import/Export Modal */
+
+.import-export-button {
+  background: transparent;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  margin: 0 0.5rem;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px var(--card-shadow);
+  max-width: 90%;
+  width: 320px;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.template-block {
+  margin-bottom: 1rem;
+}
+
+.template-block pre {
+  background: #000000;  /* полностью чёрный фон */
+  color: #ffffff;       /* белый текст */
+  padding: 0.5rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-size: 0.9rem;
+}
+
+
+.mode-select,
+.category-select,
+.export-block,
+.import-block {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.mode-select button,
+.category-select button,
+.export-block button {
+  margin: 0.25rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--input-border);
+  border-radius: 4px;
+  background: var(--btn-bg);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.mode-select button:hover,
+.category-select button:hover,
+.export-block button:hover {
+  background: var(--btn-bg-hover);
+}
+
+.category-select h4 {
+  margin-bottom: 0.5rem;
+}
+
+.category-select button {
+  background: var(--card-bg);
+  color: var(--text);
+}
+
+.category-select button:hover {
+  background: var(--date-input-hover);
+}
+
+.import-block input[type="file"] {
+  width: 100%;
+  cursor: pointer;
+}
+
+.modal-error {
+  background: #e74c3c; /* или другой цвет */
+  color: white;
+  padding: 0.5rem;
+  border-radius: 4px;
+  text-align: center;
+  margin-bottom: 1rem;
+}
