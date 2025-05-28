@@ -8,26 +8,21 @@ interface Props {
   onComplete: (entry: Entry) => void;
 }
 
-// Регулярка для поиска URL в тексте
+// URL reg
 const URL_REGEX = /https?:\/\/[\w\-._~:/?#[\]@!$&'()*+,;=%]+/g;
 
 const WishlistEntriesList: React.FC<Props> = ({ entries, onRemove, onComplete }) => {
-  // сортировка: более новые в начале
+  // sort
   const sorted = [...entries].sort((a, b) => {
     const ta = a.createdAt?.seconds ?? 0;
     const tb = b.createdAt?.seconds ?? 0;
     return tb - ta;
   });
 
-  if (sorted.length === 0) {
-    return <div className="empty">Nothing here yet</div>;
-  }
-
   const renderTitle = (text: string) => {
     const segments: React.ReactNode[] = [];
     let lastIndex = 0;
     let match: RegExpExecArray | null;
-    // Ищем URL-ы и разбиваем строку на фрагменты
     while ((match = URL_REGEX.exec(text)) !== null) {
       const url = match[0];
       const index = match.index;
@@ -50,7 +45,6 @@ const WishlistEntriesList: React.FC<Props> = ({ entries, onRemove, onComplete })
     if (lastIndex < text.length) {
       segments.push(text.slice(lastIndex));
     }
-    // Если URL не найден вовсе, отдадим оригинал
     return segments.length > 0 ? segments : text;
   };
 

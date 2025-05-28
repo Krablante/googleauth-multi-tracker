@@ -46,7 +46,7 @@ const MainApp: React.FC = () => {
     error: resourceError
   } = useResources();
 
-  // Функция перестановки: меняем местами порядки двух элементов
+  // swap elements
   const swapResourceOrder = async (id: string, otherId: string) => {
     const current = resources.find(r => r.id === id);
     const other = resources.find(r => r.id === otherId);
@@ -80,7 +80,7 @@ const MainApp: React.FC = () => {
           </button>
           {/* Import/Export */}
           <ImportExportModal />
-          {/* Аватар + выход */}
+          {/* avatar + sigh out */}
           <button className="user-icon" aria-label="Sign out" onClick={signOut}>
             <img src={avatarSrc} alt="User avatar" />
           </button>

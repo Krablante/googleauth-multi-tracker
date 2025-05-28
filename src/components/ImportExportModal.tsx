@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react';
 import { useEntries } from '../hooks/useEntries';
 import { Category } from './Tabs';
 
-// Категории доступные для импорта/экспорта
+// Categories available for import/export
 const CATEGORIES: Category[] = ['read', 'read_wish', 'films', 'films_wish'];
 
 const sampleTemplate = (cat: Category) => {
@@ -21,7 +21,7 @@ const ImportExportModal: React.FC = () => {
 
   const { entries, addEntry } = useEntries();
 
-  // Сбрасывает режим, категорию и ошибку
+  // Resets mode, category and error
   const resetState = () => {
     setMode(null);
     setCategory(null);
@@ -39,7 +39,7 @@ const ImportExportModal: React.FC = () => {
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
-  // Экспорт в JSON
+  // Export
   const handleExport = () => {
     if (!category) return;
     const data = entries.filter(e => e.category === category);
@@ -57,13 +57,12 @@ const ImportExportModal: React.FC = () => {
     handleClose();
   };
 
-  // Импорт из JSON
+  // Import
   const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!category) return;
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Проверяем расширение файла
     if (!file.name.toLowerCase().endsWith('.json') || file.type !== 'application/json') {
       setErrorMessage('Пожалуйста, выберите корректный JSON-файл');
       if (fileInputRef.current) fileInputRef.current.value = '';
@@ -89,7 +88,6 @@ const ImportExportModal: React.FC = () => {
 
   return (
     <>
-      {/* Кнопка открытия модалки */}
       <button
         className="import-export-button"
         onClick={handleOpen}
@@ -98,28 +96,28 @@ const ImportExportModal: React.FC = () => {
         📁
       </button>
 
-      {/* Модальное окно */}
+      {/* Modal window */}
       {open && (
         <div className="modal-overlay">
           <div className="modal-content">
             <button className="modal-close" onClick={handleClose}>×</button>
 
-            {/* Ошибка или сообщение */}
+            {/* Error */}
             {errorMessage && (
               <div className="modal-error">
                 {errorMessage}
               </div>
             )}
 
-            {/* Шаблон JSON сверху для импорта */}
+            {/* JSON template for import */}
             {category && mode === 'import' && (
               <div className="template-block">
-                <h4>Шаблон JSON для {category.toUpperCase()}</h4>
+                <h4>JSON template for {category.toUpperCase()}</h4>
                 <pre>{sampleTemplate(category)}</pre>
               </div>
             )}
 
-            {/* Выбор режима */}
+            {/* Select mode */}
             {!mode && (
               <div className="mode-select">
                 <button onClick={() => { resetState(); setMode('export'); }}>
@@ -131,10 +129,10 @@ const ImportExportModal: React.FC = () => {
               </div>
             )}
 
-            {/* Выбор категории */}
+            {/* category choose */}
             {mode && !category && (
               <div className="category-select">
-                <h4>Выберите категорию</h4>
+                <h4>CHOOSE</h4>
                 {CATEGORIES.map(cat => (
                   <button
                     key={cat}
@@ -146,14 +144,14 @@ const ImportExportModal: React.FC = () => {
               </div>
             )}
 
-            {/* Экспорт */}
+            {/* export */}
             {mode === 'export' && category && (
               <div className="export-block">
-                <button onClick={handleExport}>Скачать JSON</button>
+                <button onClick={handleExport}>Download</button>
               </div>
             )}
 
-            {/* Импорт */}
+            {/* import */}
             {mode === 'import' && category && (
               <div className="import-block">
                 <input

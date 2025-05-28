@@ -4,7 +4,7 @@ import { ResourceEntry } from '../types';
 import { useResourceService } from '../contexts/ResourceServiceContext';
 
 /**
- * useResources — хук для работы с ресурсами (новости, сайты и пр.)
+ * useResources — hook for working with resources (news, sites, etc.)
  */
 export function useResources() {
   const service = useResourceService();

@@ -339,7 +339,6 @@ html[data-theme="light"] .tab:hover {
   to { transform: rotate(360deg); }
 }
 
-
 /* Wishlist */
 .wishlist-entries {
   list-style: none;
@@ -369,7 +368,7 @@ html[data-theme="light"] .tab:hover {
   transition: color 0.2s;
 }
 .complete-btn:hover {
-  color: #2ecc71; /* зелёный при наведении */
+  color: #2ecc71;
 }
 .empty {
   color: var(--text);
@@ -379,9 +378,7 @@ html[data-theme="light"] .tab:hover {
 }
 
 :root {
-  /* добавляем переменную для единых переходов */
   --transition: 0.2s ease;
-  /* цвет ошибки (удаления) */
   --error-color: #e74c3c;
 }
 
@@ -407,20 +404,17 @@ html[data-theme="light"] .tab:hover {
   box-shadow: 0 4px 8px var(--card-shadow);
 }
 
-/* Title растягивается, чтобы кнопки были прижаты справа */
 .wishlist-item .title {
   flex: 1;
   margin-right: 1rem;
   word-break: break-word;
 }
 
-/* Контейнер для кнопок */
 .wishlist-item .actions {
   display: flex;
   gap: 0.5rem;
 }
 
-/* Общие правила для кнопок */
 .wishlist-item .actions button {
   width: 2rem;
   height: 2rem;
@@ -434,7 +428,6 @@ html[data-theme="light"] .tab:hover {
   transition: background var(--transition), color var(--transition);
 }
 
-/* Кнопка переноса (✓) */
 .complete-btn {
   background: var(--btn-bg);
   color: white;
@@ -455,7 +448,6 @@ html[data-theme="light"] .tab:hover {
   outline: none;
 }
 
-/* Пустое состояние */
 .empty {
   color: var(--text);
   opacity: 0.6;
@@ -463,18 +455,15 @@ html[data-theme="light"] .tab:hover {
   margin: 1rem 0;
 }
 
-/* В светлой теме делаем цвет ✓ одинаковым с текстом (#333) */
 html[data-theme="light"] .complete-btn {
-  background: transparent; /* если надо убрать цветной круг */
-  color: var(--text);      /* == #333 */
+  background: transparent;
+  color: var(--text);
 }
 
-/* При наведении можно чуть затемнять или оставить тот же цвет */
 html[data-theme="light"] .complete-btn:hover {
   color: #2ecc71;
 }
 
-/* Responsive: уменьшаем отступы на узких экранах */
 @media (max-width: 480px) {
   .wishlist-item {
     padding: 0.5rem;
@@ -486,9 +475,6 @@ html[data-theme="light"] .complete-btn:hover {
   }
 }
 
-/* src/index.css */
-
-/* контейнер для заголовка + иконки */
 .header {
   display: flex;
   align-items: center;
@@ -500,7 +486,6 @@ html[data-theme="light"] .complete-btn:hover {
   gap: 0.5rem;
 }
 
-/* стили для кнопки-иконки */
 .icon-tab {
   padding: 0.4rem;
   border: 1px solid var(--input-border);
@@ -519,12 +504,9 @@ html[data-theme="light"] .complete-btn:hover {
   color: white;
 }
 
-
-/* Стили для URL-поля в ResourceForm */
+/* URL field ResourceForm */
 .entry-form input[type="url"] {
-  /* Не растягиваем так сильно, как текст, */
-  /* но задаём ту же «обёртку» */
-  flex: 0 0 200px;      /* желаемая ширина */
+  flex: 0 0 200px;
   padding: 0.6rem;
   font-size: 1rem;
   border: 1px solid var(--input-border);
@@ -539,12 +521,7 @@ html[data-theme="light"] .complete-btn:hover {
   border-color: var(--input-border-focus);
 }
 
-/* Если хотите, чтобы и текстовое поле для названия ресурса тоже */
-/* имело универсальную обёртку (не только input[type="text"]), */
-/* можно чуть расширить правило: */
 .entry-form .title-input {
-  /* те же стили, что у input[type="text"] */
-  /* (дублируется для уверенности) */
   padding: 0.6rem;
   font-size: 1rem;
   border: 1px solid var(--input-border);
@@ -559,9 +536,8 @@ html[data-theme="light"] .complete-btn:hover {
   border-color: var(--input-border-focus);
 }
 
-/* Ссылки в списке ресурсов без синего/фиолетового, без подчеркивания */
 .wishlist-item a.title {
-  color: var(--text);      /* или любой другой «приятный» цвет */
+  color: var(--text);
   text-decoration: none;
   transition: color var(--transition);
 }
@@ -570,13 +546,10 @@ html[data-theme="light"] .complete-btn:hover {
   text-decoration: underline;
 }
 
-/* Чтобы не было фиолетового после посещения */
 .wishlist-item a.title:visited {
   color: var(--text);
 }
 
-
-/* круглые кнопки-стрелки для ResourcesList */
 .arrow-btn {
   width: 2rem;
   height: 2rem;
@@ -650,8 +623,8 @@ html[data-theme="light"] .complete-btn:hover {
 }
 
 .template-block pre {
-  background: #000000;  /* полностью чёрный фон */
-  color: #ffffff;       /* белый текст */
+  background: #000000;
+  color: #ffffff;
   padding: 0.5rem;
   border-radius: 4px;
   overflow-x: auto;
