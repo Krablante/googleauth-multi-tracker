@@ -8,7 +8,7 @@ const CATEGORIES: Category[] = ['read', 'read_wish', 'films', 'films_wish'];
 
 const sampleTemplate = (cat: Category) => {
   return JSON.stringify([
-    { date: 'YYYY-MM-DD', title: 'Название записи' }
+    { date: 'YYYY-MM-DD', title: 'Post Title' }
   ], null, 2);
 };
 
@@ -44,7 +44,7 @@ const ImportExportModal: React.FC = () => {
     if (!category) return;
     const data = entries.filter(e => e.category === category);
     if (data.length === 0) {
-      setErrorMessage('Нет записей для экспорта в этой категории');
+      setErrorMessage('There are no records to export in this category');
       return;
     }
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -79,10 +79,10 @@ const ImportExportModal: React.FC = () => {
           count++;
         }
       }
-      setErrorMessage(`Импортировано ${count} записей из категории ${category}`);
+      setErrorMessage(`Imported ${count} records from category ${category}`);
     } catch (err) {
       console.error(err);
-      setErrorMessage('Ошибка при разборе файла: убедитесь, что формат JSON корректен');
+      setErrorMessage('Error parsing file: Make sure the JSON format is correct');
     }
   };
 
