@@ -1,22 +1,23 @@
 # Tracker
 
-A simple, PWA for tracking books/articles, films/series **and** custom web resources. Built with React, TypeScript, and Firebase, it lets you sign in with Google, add entries, manage wishlists and even bookmark your favorite sites or news feeds.
-
+A simple, PWA for tracking books/articles, films/series, goals/tasks **and** custom web resources. Built with React, TypeScript, and Firebase, it lets you sign in with Google, add entries, manage wishlists, set daily goals, and even bookmark your favorite sites or news feeds.
 
 ## Features
 
 * 🔐 **Google Authentication** (only signed-in users can access)
-* 📚 **Five categories**:
+* 📚 **Six categories**:
 
   * **READ** (books & articles)
   * **READ (W)** (wishlist for books & articles; undated, move items to READ with today’s date)
   * **FILMS** (movies & TV shows)
   * **FILMS (W)** (wishlist for films & TV shows; undated, move items to FILMS with today’s date)
+  * **GOALS 🎯** (tasks/goals; undated list, mark as done to remove)
   * **RESOURCES 📰** (custom links and news sites; add, reorder, and remove bookmarks)
-* ➕ **Add & remove** entries and resources in real time with Firestore
+* ➕ **Add & remove** entries, goals, and resources in real time with Firestore
 * 🔀 **Reordering** for Resources: move bookmarks up or down to adjust priority
 * 📅 **Date picker** via calendar icon for READ & FILMS categories
 * ✔️ **Wishlist support**: mark items as done to move them into main lists with today’s date
+* 🎯 **Goals support**: add tasks without dates; mark with ✓ to delete
 * 🌗 **Light / Dark theme** toggle (saved in `localStorage`)
 * 💾 **Offline support** via custom Service Worker
 * 📱 **Progressive Web App**: installable on desktop & mobile, offline-ready
@@ -24,7 +25,7 @@ A simple, PWA for tracking books/articles, films/series **and** custom web resou
 
 ## Import / Export JSON
 
-Tracker now supports **JSON import and export** for your entries (excluding news resources). In each category (READ, READ (W), FILMS, FILMS (W)), you’ll see a 📁 button next to the avatar:
+Tracker now supports **JSON import and export** for your entries (excluding news resources and goals). In each category (READ, READ (W), FILMS, FILMS (W)), you’ll see a 📁 button next to the avatar:
 
 1. **Click the 📁 button** to open the Import / Export modal.
 2. **Choose** **Export** or **Import**.
@@ -90,4 +91,4 @@ Tracker now supports **JSON import and export** for your entries (excluding news
 
 ---
 
-Enjoy tracking your reading, watching, and web explorations!
+Enjoy tracking your reading, watching, goals, and web explorations!

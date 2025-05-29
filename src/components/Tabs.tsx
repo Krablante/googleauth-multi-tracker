@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Разрешаем категорию ресурсов, но не будем её выводить в списке табов
-export type Category = 'read' | 'read_wish' | 'films' | 'films_wish' | 'resources';
+export type Category = 'read' | 'read_wish' | 'films' | 'films_wish' | 'resources' | 'goals';
 
 interface TabsProps {
   active: Category;

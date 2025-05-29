@@ -6,6 +6,7 @@ import EntriesList from './components/EntriesList';
 import WishlistEntriesList from './components/WishlistEntriesList';
 import ResourceForm from './components/ResourceForm';
 import ResourcesList from './components/ResourcesList';
+import GoalsList from './components/GoalsList'; 
 import { useEntries } from './hooks/useEntries';
 import { useResources } from './hooks/useResources';
 import { useAuth } from './contexts/AuthContext';
@@ -16,7 +17,7 @@ const MainApp: React.FC = () => {
   const { user, signOut } = useAuth();
   const [category, setCategory] = useState<Category>('read');
 
-  // Тема
+  // theme
   const [theme, setTheme] = useState<'light' | 'dark'>(
     (localStorage.getItem('theme') as 'light' | 'dark') || 'light'
   );
@@ -63,6 +64,13 @@ const MainApp: React.FC = () => {
         <div className="header-main">
           <h1>Tracker</h1>
           <button
+            className={`icon-tab ${category === 'goals' ? 'tab--active' : ''}`}
+            onClick={() => setCategory('goals')}
+            aria-label="Goals"
+          >
+            🎯
+          </button>
+          <button
             className={`icon-tab ${category === 'resources' ? 'tab--active' : ''}`}
             onClick={() => setCategory('resources')}
             aria-label="Resources"
@@ -80,7 +88,7 @@ const MainApp: React.FC = () => {
           </button>
           {/* Import/Export */}
           <ImportExportModal />
-          {/* avatar + sigh out */}
+          {/* avatar + sign out */}
           <button className="user-icon" aria-label="Sign out" onClick={signOut}>
             <img src={avatarSrc} alt="User avatar" />
           </button>
@@ -98,6 +106,12 @@ const MainApp: React.FC = () => {
             onRemove={removeResource}
             onSwap={swapResourceOrder}
           />
+        </>
+      ) : category === 'goals' ? (
+        // Goals
+        <>
+          <EntryForm activeCategory="goals" onAdd={addEntry} />
+          <GoalsList entries={filteredEntries} onRemove={removeEntry} />
         </>
       ) : (
         <>

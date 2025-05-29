@@ -12,15 +12,15 @@ const EntryForm: React.FC<EntryFormProps> = ({ activeCategory, onAdd }) => {
   const [date, setDate]   = useState<string>(today);
   const [title, setTitle] = useState<string>('');
 
-  // считаем, что вишлист, если категория заканчивается на "_wish"
-  const isWishlist = activeCategory.endsWith('_wish');
+  const isNoDate = activeCategory.endsWith('_wish') || activeCategory === 'goals';
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const trimmed = title.trim();
     if (!trimmed) return;
-    // Если вишлист — всё равно сохраняем date (на будущее переносов)
-    onAdd({ date, title: trimmed, category: activeCategory });
+    // if it's goals - pass an empty date
+    const dateValue = activeCategory === 'goals' ? '' : date;
+    onAdd({ date: dateValue, title: trimmed, category: activeCategory });
     setTitle('');
     setDate(today);
   };
@@ -34,8 +34,8 @@ const EntryForm: React.FC<EntryFormProps> = ({ activeCategory, onAdd }) => {
 
   return (
     <form onSubmit={handleSubmit} className="entry-form">
-      {/* Для обычных категорий — скрытый date-input + кнопка */}
-      {!isWishlist && (
+      {/* For regular categories (not wishlist and not goals) - hidden date-input + button*/}
+      {!isNoDate && (
         <>
           <input
             type="date"
