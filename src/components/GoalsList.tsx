@@ -1,6 +1,25 @@
 // src/components/GoalsList.tsx
-import React, { useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Goal } from '../types';
+
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+  MeasuringStrategy, // <-- заменили LayoutMeasuringStrategy на MeasuringStrategy
+} from '@dnd-kit/core';
+
+import {
+  arrayMove,
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+
+import { CSS } from '@dnd-kit/utilities';
 
 interface Props {
   entries: Goal[];
@@ -9,80 +28,105 @@ interface Props {
 }
 
 const GoalsList: React.FC<Props> = ({ entries, onRemove, onReorder }) => {
-  // Сортируем по полю order (хотя Firestore уже возвращает их в правильном порядке)
-  const sorted = [...entries].sort((a, b) => a.order - b.order);
+  const [items, setItems] = useState<Goal[]>([]);
 
-  // Ref, чтобы помнить, какой элемент тащим
-  const draggingId = useRef<string | null>(null);
+  useEffect(() => {
+    const sorted = [...entries].sort((a, b) => a.order - b.order);
+    setItems(sorted);
+  }, [entries]);
 
-  // Когда начали тянуть
-  const handleDragStart = (e: React.DragEvent<HTMLLIElement>, id: string) => {
-    draggingId.current = id;
-    e.dataTransfer.setData('text/plain', id);
-    e.dataTransfer.effectAllowed = 'move';
-  };
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    })
+  );
 
-  // Разрешаем drop (по умолчанию браузер не отдаёт onDrop)
-  const handleDragOver = (e: React.DragEvent<HTMLLIElement>) => {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
-  };
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) {
+      return;
+    }
 
-  // Когда отпустили на другом элементе
-  const handleDrop = (e: React.DragEvent<HTMLLIElement>, targetId: string) => {
-    e.preventDefault();
-    const sourceId = draggingId.current || e.dataTransfer.getData('text/plain');
-    if (!sourceId || sourceId === targetId) return;
-
-    const oldIndex = sorted.findIndex(item => item.id === sourceId);
-    const newIndex = sorted.findIndex(item => item.id === targetId);
+    const oldIndex = items.findIndex(item => item.id === active.id);
+    const newIndex = items.findIndex(item => item.id === over.id);
     if (oldIndex < 0 || newIndex < 0) return;
 
-    const newSorted = Array.from(sorted);
-    const [movedItem] = newSorted.splice(oldIndex, 1);
-    newSorted.splice(newIndex, 0, movedItem);
-
-    // Передаём наверх новый массив ID-шек
-    onReorder(newSorted.map(item => item.id));
-
-    draggingId.current = null;
+    const newItems = arrayMove(items, oldIndex, newIndex);
+    setItems(newItems);
+    onReorder(newItems.map(item => item.id));
   };
 
-  // По окончании drag, сбрасываем ref
-  const handleDragEnd = () => {
-    draggingId.current = null;
-  };
-
-  if (sorted.length === 0) {
+  if (items.length === 0) {
     return <div className="empty">No goals yet</div>;
   }
 
   return (
-    <ul className="wishlist-entries">
-      {sorted.map(goal => (
-        <li
-          key={goal.id}
-          className="wishlist-item"
-          draggable
-          onDragStart={e => handleDragStart(e, goal.id)}
-          onDragOver={handleDragOver}
-          onDrop={e => handleDrop(e, goal.id)}
-          onDragEnd={handleDragEnd}
-        >
-          <span className="title">{goal.title}</span>
-          <div className="actions">
-            <button
-              className="complete-btn"
-              title="Done"
-              onClick={() => onRemove(goal.id)}
-            >
-              ✓
-            </button>
-          </div>
-        </li>
-      ))}
-    </ul>
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      measuring={{ droppable: { strategy: MeasuringStrategy.Always } }} // <-- здесь тоже
+      onDragEnd={handleDragEnd}
+    >
+      <SortableContext
+        items={items.map(goal => goal.id)}
+        strategy={verticalListSortingStrategy}
+      >
+        <ul className="wishlist-entries">
+          {items.map((goal, index) => (
+            <SortableItem key={goal.id} id={goal.id}>
+              <span className="title">{goal.title}</span>
+              <div className="actions">
+                <button
+                  className="complete-btn"
+                  title="Done"
+                  onClick={() => onRemove(goal.id)}
+                >
+                  ✓
+                </button>
+              </div>
+            </SortableItem>
+          ))}
+        </ul>
+      </SortableContext>
+    </DndContext>
   );
 };
 
 export default GoalsList;
+
+interface SortableItemProps {
+  id: string;
+  children: React.ReactNode;
+}
+
+const SortableItem: React.FC<SortableItemProps> = ({ id, children }) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id });
+
+  const style: React.CSSProperties = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.9 : 1,
+    zIndex: isDragging ? 999 : 'auto',
+  };
+
+  return (
+    <li
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className="wishlist-item"
+    >
+      {children}
+    </li>
+  );
+};
