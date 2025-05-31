@@ -7,6 +7,7 @@ export interface Entry {
   date: string;              // YYYY-MM-DD
   title: string;
   category: Category;
+  keywords?: string[];
   createdAt?: Timestamp;
 }
 

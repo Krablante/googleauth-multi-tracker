@@ -712,3 +712,233 @@ html[data-theme="light"] .complete-btn:hover {
   padding: 0;
   margin: 0;
 }
+
+/* ------------------------------------------------------------
+   Стили для EntryForm: две строки: top (календарь + название + кнопка),
+   bottom (ключевые слова) 
+   ------------------------------------------------------------ */
+
+/* Сам контейнер формы: располагаем строки вертикально */
+.entry-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;      /* отступ между первой и второй строкой */
+  width: 100%;      /* занимать всю ширину родителя */
+}
+
+/* Первая строка: календарь + поле “Название” + кнопка Submit */
+.entry-row--top {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;      /* расстояние между календарём, названием и кнопкой */
+  width: 100%;      /* чтобы строчка растягивалась на всю ширину формы */
+}
+
+/* Вторая строка: только поле “Ключевые слова” */
+.entry-row--bottom {
+  display: flex;
+  width: 100%;      /* обязательно, чтобы поле было на всю ширину */
+}
+
+/* Скрытый input[type="date"] */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Кнопка-календарь (иконка 📅) */
+.date-btn {
+  padding: 0.5rem;
+  border: 1px solid var(--input-border);
+  border-radius: 50%;
+  background: var(--date-input-bg);
+  color: var(--text);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  flex: 0 0 auto; /* фиксированная ширина, не растягиваться */
+}
+
+.date-btn:hover {
+  background: var(--date-input-hover);
+}
+
+/* Поле Названия */
+.title-input {
+  flex: 1 1 auto;   /* растягиваем на оставшуюся ширину */
+  min-width: 0;     /* позволяет корректно сжиматься при малой ширине контейнера */
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: 1px solid var(--input-border);
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: var(--text);
+  transition: border-color 0.2s;
+}
+
+.title-input:focus {
+  outline: none;
+  border-color: var(--input-border-focus);
+}
+
+/* Кнопка “A” (Submit) */
+.submit-btn {
+  flex: 0 0 auto;   /* фиксированная ширина/высота */
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  border: none;
+  cursor: pointer;
+  background: var(--btn-bg);
+  color: white;
+  transition: background 0.2s;
+}
+
+.submit-btn:hover {
+  background: var(--btn-bg-hover);
+}
+
+/* Поле “Ключевые слова” */
+.keywords-input {
+  flex: 1 1 auto;   /* растягиваем на всю ширину контейнера второй строки */
+  min-width: 0;     /* важно, чтобы при узких экранах внутри flex могло сжиматься */
+  padding: 0.6rem;
+  font-size: 0.9rem;
+  border: 1px solid var(--input-border);
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: var(--text);
+  transition: border-color 0.2s;
+}
+
+.keywords-input:focus {
+  outline: none;
+  border-color: var(--input-border-focus);
+}
+
+/* Для мобильной адаптации уменьшим немного отступы/размер шрифтов */
+@media (max-width: 480px) {
+  .entry-form {
+    gap: 0.4rem;
+  }
+  .entry-row--top,
+  .entry-row--bottom {
+    gap: 0.4rem;
+  }
+  .date-btn {
+    padding: 0.4rem;
+  }
+  .title-input {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+  .submit-btn {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+  }
+  .keywords-input {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+  }
+}
+
+/* ---------------------------------------
+   Стили для EntriesList с раскрытием тегов
+   --------------------------------------- */
+
+/* Контейнер одной записи */
+.entry-group .item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.75rem;
+}
+
+/* Основной ряд в каждой записи: кнопка 🔖, заголовок, крестик */
+.entry-group .item-main {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Кнопка раскрытия/скрытия тегов */
+.toggle-keywords-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+  flex: 0 0 auto;
+}
+
+.toggle-keywords-btn:hover,
+.toggle-keywords-btn:focus {
+  color: var(--btn-bg-hover);
+  outline: none;
+}
+
+/* Текст названия записи */
+.entry-group .title {
+  flex: 1;
+  word-break: break-word;
+  font-size: 1rem;
+}
+
+/* Кнопка удаления записи */
+.entry-group .delete-btn {
+  border: none;
+  background: transparent;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: color 0.2s;
+  flex: 0 0 auto;
+}
+
+.entry-group .delete-btn:hover,
+.entry-group .delete-btn:focus {
+  color: var(--error-color);
+  outline: none;
+}
+
+
+.keywords-list {
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--text);
+  opacity: 0.8;
+  padding-left: 1.75rem; /* чтобы отступ был от иконки 🔖 и названия */
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+
+.entry-form:has(input[type="url"]) {
+  display: flex;              /* на всякий случай или уточнение */
+  flex-direction: row;        /* горизонтальная верстка вместо column */
+  align-items: center;
+  gap: 0.5rem;                /* отступ между полями и кнопкой */
+}
+
+.entry-form:has(input[type="url"]) .title-input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.entry-form:has(input[type="url"]) input[type="url"] {
+  flex: 0 0 200px;
+  margin-left: 0.5rem;
+}

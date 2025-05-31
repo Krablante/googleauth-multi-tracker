@@ -1,5 +1,5 @@
 // src/components/EntriesList.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import { Entry } from '../types';
 
 interface Props {
@@ -8,12 +8,23 @@ interface Props {
 }
 
 const EntriesList: React.FC<Props> = ({ entries, onRemove }) => {
+  // Группируем по дате
   const groups = entries.reduce<Record<string, Entry[]>>((acc, entry) => {
     (acc[entry.date] ||= []).push(entry);
     return acc;
   }, {});
 
   const sortedDates = Object.keys(groups).sort((a, b) => (a < b ? 1 : -1));
+
+  // Отслеживаем, какие записи раскрыты (показаны их ключевые слова)
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
+
+  const toggleKeywords = (id: string) => {
+    const newSet = new Set(expandedIds);
+    if (newSet.has(id)) newSet.delete(id);
+    else newSet.add(id);
+    setExpandedIds(newSet);
+  };
 
   return (
     <ul id="entries">
@@ -27,13 +38,28 @@ const EntriesList: React.FC<Props> = ({ entries, onRemove }) => {
             <div className="items">
               {groups[date].map(e => (
                 <div key={e.id} className="item">
-                  <span className="title">{e.title}</span>
-                  <button
-                    className="delete-btn"
-                    onClick={() => onRemove(e.id)}
-                  >
-                    ×
-                  </button>
+                  <div className="item-main">
+                    <button
+                      className="toggle-keywords-btn"
+                      onClick={() => toggleKeywords(e.id)}
+                      title={expandedIds.has(e.id) ? 'Скрыть ключевые слова' : 'Показать ключевые слова'}
+                    >
+                      🔖
+                    </button>
+                    <span className="title">{e.title}</span>
+                    <button
+                      className="delete-btn"
+                      onClick={() => onRemove(e.id)}
+                      title="Удалить запись"
+                    >
+                      ×
+                    </button>
+                  </div>
+                  {expandedIds.has(e.id) && e.keywords && e.keywords.length > 0 && (
+                    <div className="keywords-list">
+                      {e.keywords.join(', ')}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

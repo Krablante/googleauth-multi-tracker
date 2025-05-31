@@ -45,12 +45,20 @@ export class FirestoreEntryService implements EntryService {
   }
 
   async add(entry: Omit<Entry, 'id'>): Promise<Entry> {
-    // теперь просто всегда создаём документ в «readings»
-    const ref = await addDoc(collection(this.db, 'readings'), {
-      owner: this.uid,
-      ...entry,
-      createdAt: serverTimestamp(),
-    });
+      // Соберём объект для записи, добавляя keywords только если оно есть
+      const dataToSave: any = {
+        owner: this.uid,
+        title: entry.title,
+        date: entry.date,
+        category: entry.category,
+        createdAt: serverTimestamp(),
+      };
+      // Если пользователь передал keywords (и там хотя бы один непустой элемент) — сохраним его
+      if (entry.keywords && entry.keywords.length > 0) {
+        dataToSave.keywords = entry.keywords;
+      }
+
+      const ref = await addDoc(collection(this.db, 'readings'), dataToSave);
     return { id: ref.id, ...entry };
   }
 
