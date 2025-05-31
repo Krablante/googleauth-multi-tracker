@@ -30,11 +30,25 @@ const MainApp: React.FC = () => {
   const { entries, addEntry, removeEntry, error: entryError } = useEntries();
   const filteredEntries = entries.filter(e => e.category === category);
 
-  const markAsDone = async (entry: any) => {
+  /**
+   * Принимает entry из вишлиста и опциональный массив keywords.
+   * Переводит его в основную категорию ('read' или 'films'),
+   * добавляет новую запись с сегодняшней датой + тегами (если они есть),
+   * затем удаляет старую запись из вишлиста.
+   */
+  const markAsDone = async (entry: any, keywords: string[] = []) => {
     const targetCat: Category =
       entry.category === 'read_wish' ? 'read' : 'films';
     const today = new Date().toISOString().slice(0, 10);
-    await addEntry({ date: today, title: entry.title, category: targetCat });
+
+    await addEntry({
+      date: today,
+      title: entry.title,
+      category: targetCat,
+      // Если пользователь указал хотя бы один тег, передаём их; иначе поле keywords отсутствует
+      ...(keywords.length > 0 ? { keywords } : {}),
+    });
+
     await removeEntry(entry.id);
   };
 
@@ -138,6 +152,7 @@ const MainApp: React.FC = () => {
             <WishlistEntriesList
               entries={filteredEntries}
               onRemove={removeEntry}
+              // Передаём изменённый колбэк onComplete, который принимает entry и keywords
               onComplete={markAsDone}
             />
           ) : (
