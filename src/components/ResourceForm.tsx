@@ -22,7 +22,7 @@ const ResourceForm: React.FC<ResourceFormProps> = ({ onAdd }) => {
     <form onSubmit={handleSubmit} className="entry-form">
       <input
         type="text"
-        placeholder="Название ресурса"
+        placeholder="title"
         value={title}
         onChange={e => setTitle(e.target.value)}
         className="title-input"

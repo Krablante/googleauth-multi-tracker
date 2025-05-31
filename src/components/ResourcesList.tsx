@@ -120,7 +120,7 @@ const ResourcesList: React.FC<Props> = ({ entries, onRemove, onReorder }) => {
 
 export default ResourcesList;
 
-/** Отдельный компонент для каждого элемента списка */
+/** A separate component for each list item */
 interface SortableResourceItemProps {
   id: string;
   children: React.ReactNode;

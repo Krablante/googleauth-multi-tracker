@@ -51,7 +51,7 @@ export class FirestoreResourceService implements ResourceService {
   async add(
     entry: Omit<ResourceEntry, 'id' | 'order' | 'createdAt'>
   ): Promise<ResourceEntry> {
-    // Определяем текущий максимальный order для пользователя
+    // Determine the current maximum order for the user
     const snapshot = await getDocs(
       query(
         collection(this.db, this.collName),

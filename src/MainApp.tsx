@@ -31,10 +31,10 @@ const MainApp: React.FC = () => {
   const filteredEntries = entries.filter(e => e.category === category);
 
   /**
-   * Принимает entry из вишлиста и опциональный массив keywords.
-   * Переводит его в основную категорию ('read' или 'films'),
-   * добавляет новую запись с сегодняшней датой + тегами (если они есть),
-   * затем удаляет старую запись из вишлиста.
+    * Takes a wishlist entry and an optional keywords array.
+    * Moves it to the main category ('read' or 'films'),
+    * adds a new entry with today's date + tags (if any),
+    * then removes the old entry from the wishlist.
    */
   const markAsDone = async (entry: any, keywords: string[] = []) => {
     const targetCat: Category =
@@ -45,7 +45,7 @@ const MainApp: React.FC = () => {
       date: today,
       title: entry.title,
       category: targetCat,
-      // Если пользователь указал хотя бы один тег, передаём их; иначе поле keywords отсутствует
+      // If the user specified at least one tag, pass them; otherwise, the keywords field is missing
       ...(keywords.length > 0 ? { keywords } : {}),
     });
 
@@ -152,7 +152,7 @@ const MainApp: React.FC = () => {
             <WishlistEntriesList
               entries={filteredEntries}
               onRemove={removeEntry}
-              // Передаём изменённый колбэк onComplete, который принимает entry и keywords
+              // Pass the modified onComplete callback, which accepts entry and keywords
               onComplete={markAsDone}
             />
           ) : (

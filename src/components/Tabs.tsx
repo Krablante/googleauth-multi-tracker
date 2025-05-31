@@ -1,8 +1,8 @@
 // src/components/Tabs.tsx
 import React from 'react';
 
-// Здесь мы оставляем категорию 'goals', но не показываем её в самих табах:
-// (кнопка Goals вынесена вручную в MainApp, через 🎯)
+// Here we leave the 'goals' category, but do not show it in the tabs themselves:
+// (the Goals button is manually moved to MainApp, via 🎯)
 export type Category = 'read' | 'read_wish' | 'films' | 'films_wish' | 'resources' | 'goals';
 
 interface TabsProps {

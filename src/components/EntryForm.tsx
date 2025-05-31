@@ -13,7 +13,7 @@ const EntryForm: React.FC<EntryFormProps> = ({ activeCategory, onAdd }) => {
   const [title, setTitle] = useState<string>('');
   const [keywordsInput, setKeywordsInput] = useState<string>('');
 
-  // Если категория заканчивается на "_wish" или равна "goals", скрываем дату и ключевые слова
+  // If category ends with "_wish" or equals "goals", hide date and keywords
   const isNoDate = activeCategory.endsWith('_wish') || activeCategory === 'goals';
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -21,7 +21,7 @@ const EntryForm: React.FC<EntryFormProps> = ({ activeCategory, onAdd }) => {
     const trimmed = title.trim();
     if (!trimmed) return;
 
-    // Разбираем строку ключевых слов через ';', только если это не вишлист и не цели
+    // Parse the keyword string through ';', only if it is not a wishlist or goals
     const raw = keywordsInput.trim();
     const keywordsArray: string[] =
       !isNoDate && raw
@@ -31,7 +31,7 @@ const EntryForm: React.FC<EntryFormProps> = ({ activeCategory, onAdd }) => {
             .filter((s) => s.length > 0)
         : [];
 
-    // Если категория goals, передаём пустую дату
+    // If the category is goals, pass an empty date
     const dateValue = activeCategory === 'goals' ? '' : date;
 
     onAdd({
@@ -41,7 +41,7 @@ const EntryForm: React.FC<EntryFormProps> = ({ activeCategory, onAdd }) => {
       ...(keywordsArray.length > 0 ? { keywords: keywordsArray } : {}),
     });
 
-    // Сбрасываем поля после отправки
+    // Reset fields after sending
     setTitle('');
     setDate(today);
     setKeywordsInput('');
@@ -56,7 +56,7 @@ const EntryForm: React.FC<EntryFormProps> = ({ activeCategory, onAdd }) => {
 
   return (
     <form onSubmit={handleSubmit} className="entry-form">
-      {/* Первая строка: календарь + поле «Название» + кнопка */}
+      {/* First line: calendar + "Title" field + button */}
       <div className="entry-row entry-row--top">
         {!isNoDate && (
           <>
@@ -92,12 +92,12 @@ const EntryForm: React.FC<EntryFormProps> = ({ activeCategory, onAdd }) => {
         </button>
       </div>
 
-      {/* Вторая строка: поле для ввода ключевых слов (скрываем для вишлистов и целей) */}
+      {/* Second line: field for entering keywords (hide for wishlists and goals) */}
       {!isNoDate && (
         <div className="entry-row entry-row--bottom">
           <input
             type="text"
-            placeholder="Ключевые слова через `;` (необязательно)"
+            placeholder="keywords `;`"
             value={keywordsInput}
             onChange={(e) => setKeywordsInput(e.target.value)}
             className="keywords-input"

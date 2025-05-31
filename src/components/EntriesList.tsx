@@ -8,7 +8,7 @@ interface Props {
 }
 
 const EntriesList: React.FC<Props> = ({ entries, onRemove }) => {
-  // Группируем по дате
+  // date sort
   const groups = entries.reduce<Record<string, Entry[]>>((acc, entry) => {
     (acc[entry.date] ||= []).push(entry);
     return acc;
@@ -16,7 +16,7 @@ const EntriesList: React.FC<Props> = ({ entries, onRemove }) => {
 
   const sortedDates = Object.keys(groups).sort((a, b) => (a < b ? 1 : -1));
 
-  // Отслеживаем, какие записи раскрыты (показаны их ключевые слова)
+  // keywords check
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
 
   const toggleKeywords = (id: string) => {

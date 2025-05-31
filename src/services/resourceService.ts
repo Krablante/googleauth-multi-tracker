@@ -1,20 +1,20 @@
 import { ResourceEntry } from '../types';
 
 export interface ResourceService {
-  /** Подписка на изменения списка ресурсов */
+  /** Subscribe to resource list changes */
   subscribe: (
     onUpdate: (entries: ResourceEntry[]) => void,
     onError?: (e: Error) => void
   ) => () => void;
 
-  /** Добавить ресурс (title, url); порядок назначается автоматически */
+  /** Add resource (title, url); order is assigned automatically */
   add: (
     entry: Omit<ResourceEntry, 'id' | 'order' | 'createdAt'>
   ) => Promise<ResourceEntry>;
 
-  /** Удалить ресурс */
+  /** Delete resource */
   remove: (id: string) => Promise<void>;
 
-  /** Обновить порядок ресурса */
+  /** Update resource order */
   updateOrder: (id: string, newOrder: number) => Promise<void>;
 }

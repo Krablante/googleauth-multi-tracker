@@ -10,7 +10,7 @@ import MainApp from './MainApp';
 function AppInner() {
   const { user, loading, signIn } = useAuth();
 
-  // 1) Если ещё идёт проверка авторизации — показываем спиннер
+  // 1) If the authorization check is still in progress, show the spinner
   if (loading) {
     return (
       <div className="loading-screen">
@@ -19,7 +19,7 @@ function AppInner() {
     );
   }
 
-  // 2) Если пользователь не залогинен — показываем экран входа
+  // 2) If the user is not logged in, show the login screen
   if (!user) {
     return (
       <div className="login-screen">
@@ -34,8 +34,7 @@ function AppInner() {
     );
   }
 
-  // 3) Как только user !== null, можно безопасно монтировать провайдеры,
-  //    которые требуют наличия user (EntryService, ResourceService, GoalService)
+// 3) Once user !== null, it is safe to mount providers that require user (EntryService, ResourceService, GoalService)
   return (
     <EntryServiceProvider>
       <ResourceServiceProvider>

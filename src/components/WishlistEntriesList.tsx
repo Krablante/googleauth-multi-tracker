@@ -104,7 +104,7 @@ const WishlistEntriesList: React.FC<Props> = ({ entries, onRemove, onComplete })
               <div className="keywords-input-block">
                 <input
                   type="text"
-                  placeholder="Ключевые слова через `;` (необязательно)"
+                  placeholder="keywords `;`"
                   value={keywordsInput}
                   onChange={(ev) => setKeywordsInput(ev.target.value)}
                   className="keywords-input"

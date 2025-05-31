@@ -5,8 +5,8 @@ import { Goal } from '../types';
 import { useGoalService } from '../contexts/GoalServiceContext';
 
 /**
- * useGoals — хук для работы с коллекцией «цели».
- * Возвращает:
+  * useGoals — hook for working with the "goals" collection.
+  * Returns:
  *   - goals: Goal[]
  *   - addGoal: ( { title, order? } ) => Promise<void>
  *   - removeGoal: (id) => Promise<void>

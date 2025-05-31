@@ -45,7 +45,7 @@ export class FirestoreEntryService implements EntryService {
   }
 
   async add(entry: Omit<Entry, 'id'>): Promise<Entry> {
-      // Соберём объект для записи, добавляя keywords только если оно есть
+      // Let's build the object for writing, adding keywords only if it exists
       const dataToSave: any = {
         owner: this.uid,
         title: entry.title,
@@ -53,7 +53,7 @@ export class FirestoreEntryService implements EntryService {
         category: entry.category,
         createdAt: serverTimestamp(),
       };
-      // Если пользователь передал keywords (и там хотя бы один непустой элемент) — сохраним его
+      // If the user passed keywords (and there is at least one non-empty element) - save it
       if (entry.keywords && entry.keywords.length > 0) {
         dataToSave.keywords = entry.keywords;
       }

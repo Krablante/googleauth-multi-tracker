@@ -18,7 +18,6 @@ export interface Goal {
     order: number;     
     createdAt?: Timestamp;
   }
-  // --------------------------------------------------
 
 // news
 export interface ResourceEntry {

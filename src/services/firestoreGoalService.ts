@@ -21,7 +21,7 @@ import { GoalService } from './goalService';
 export class FirestoreGoalService implements GoalService {
   private db = getFirestore();
   private uid: string;
-  private collName = 'goals'; // <— здесь мы выбираем отдельную коллекцию
+  private collName = 'goals'; // <— here we select a separate collection
 
   constructor(uid: string) {
     this.uid = uid;
@@ -31,9 +31,9 @@ export class FirestoreGoalService implements GoalService {
     onUpdate: (goals: Goal[]) => void,
     onError?: (e: Error) => void
   ) {
-    // Подписываемся на все документы в коллекции `goals`,
-    // принадлежащие текущему пользователю (owner===uid),
-    // сортируем по полю 'order' (возрастание).
+    // Subscribe to all documents in the `goals` collection,
+    // owned by the current user (owner===uid),
+    // sort by the 'order' field (ascending).
     const q = query(
       collection(this.db, this.collName),
       where('owner', '==', this.uid),
@@ -61,7 +61,7 @@ export class FirestoreGoalService implements GoalService {
   }
 
   async add(goal: Omit<Goal, 'id' | 'createdAt'>): Promise<Goal> {
-    // 1) Определяем максимальный order среди существующих целей
+    // 1) Determine the maximum order among existing targets
     const goalsQuery = query(
       collection(this.db, this.collName),
       where('owner', '==', this.uid),
@@ -73,7 +73,7 @@ export class FirestoreGoalService implements GoalService {
     const maxOrder = maxOrderDoc ? (maxOrderDoc.data() as any).order : 0;
     const newOrder = maxOrder + 1;
 
-    // 2) Создаём документ в коллекции `goals`
+    // 2) Create a document in the `goals` collection
     const ref = await addDoc(collection(this.db, this.collName), {
       owner: this.uid,
       title: goal.title,
@@ -85,7 +85,6 @@ export class FirestoreGoalService implements GoalService {
       id: ref.id,
       title: goal.title,
       order: newOrder,
-      // createdAt поле сработает в onSnapshot, подробнее — ниже
     };
   }
 

@@ -28,7 +28,7 @@ interface Props {
   onReorder: (newOrderIds: string[]) => void;
 }
 
-// Регулярное выражение для поиска URL-ов
+// Regular expression for searching URLs
 const URL_REGEX = /https?:\/\/[\w\-._~:/?#[\]@!&;'()*+,;=%]+/g;
 
 const GoalsList: React.FC<Props> = ({ entries, onRemove, onReorder }) => {
@@ -66,7 +66,7 @@ const GoalsList: React.FC<Props> = ({ entries, onRemove, onReorder }) => {
     onReorder(newItems.map(item => item.id));
   };
 
-  // Функция, разбивающая текст на сегменты: plain text + кликабельные <a> для URL
+  // Function that splits text into segments: plain text + clickable <a> for URL
   const renderTitle = (text: string) => {
     const segments: React.ReactNode[] = [];
     let lastIndex = 0;
@@ -76,12 +76,12 @@ const GoalsList: React.FC<Props> = ({ entries, onRemove, onReorder }) => {
       const url = match[0];
       const index = match.index;
 
-      // Добавляем всё до URL как обычный текст
+      // Add everything before the URL as plain text
       if (index > lastIndex) {
         segments.push(text.slice(lastIndex, index));
       }
 
-      // Добавляем сам URL как ссылку
+      // Add the URL itself as a link
       segments.push(
         <a
           key={index}
@@ -97,12 +97,12 @@ const GoalsList: React.FC<Props> = ({ entries, onRemove, onReorder }) => {
       lastIndex = index + url.length;
     }
 
-    // Если после последнего совпадения остался обычный текст
+    // If there is normal text left after the last match
     if (lastIndex < text.length) {
       segments.push(text.slice(lastIndex));
     }
 
-    // Если не найдено ни одного URL, просто возвращаем исходную строку
+    // If no URL is found, just return the original string
     return segments.length > 0 ? segments : text;
   };
 
