@@ -28,38 +28,34 @@ interface Props {
   onReorder: (newOrderIds: string[]) => void;
 }
 
+// Регулярное выражение для поиска URL-ов
+const URL_REGEX = /https?:\/\/[\w\-._~:/?#[\]@!&;'()*+,;=%]+/g;
+
 const GoalsList: React.FC<Props> = ({ entries, onRemove, onReorder }) => {
   const [items, setItems] = useState<Goal[]>([]);
 
-  // При обновлении props.entries — пересортируем локальный state
   useEffect(() => {
     const sorted = [...entries].sort((a, b) => a.order - b.order);
     setItems(sorted);
   }, [entries]);
 
-  // 1. Настраиваем сенсоры: TouchSensor + PointerSensor
-  //    - TouchSensor с delay, чтобы поймать long-press в Chrome Mobile
-  //    - PointerSensor для мыши и Firefox Mobile
   const sensors = useSensors(
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 200,       // 200 мс «задержка» после тача, прежде чем начнётся drag
-        tolerance: 5,     // небольшое смещение до начала drag
+        delay: 200,
+        tolerance: 5,
       },
     }),
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 8,      // drag начнётся после перемещения курсора (или пальца) на 8px
+        distance: 8,
       },
     })
   );
 
-  // 2. Обработчик окончания drag
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
-    if (!over || active.id === over.id) {
-      return;
-    }
+    if (!over || active.id === over.id) return;
 
     const oldIndex = items.findIndex(item => item.id === active.id);
     const newIndex = items.findIndex(item => item.id === over.id);
@@ -68,6 +64,46 @@ const GoalsList: React.FC<Props> = ({ entries, onRemove, onReorder }) => {
     const newItems = arrayMove(items, oldIndex, newIndex);
     setItems(newItems);
     onReorder(newItems.map(item => item.id));
+  };
+
+  // Функция, разбивающая текст на сегменты: plain text + кликабельные <a> для URL
+  const renderTitle = (text: string) => {
+    const segments: React.ReactNode[] = [];
+    let lastIndex = 0;
+    let match: RegExpExecArray | null;
+
+    while ((match = URL_REGEX.exec(text)) !== null) {
+      const url = match[0];
+      const index = match.index;
+
+      // Добавляем всё до URL как обычный текст
+      if (index > lastIndex) {
+        segments.push(text.slice(lastIndex, index));
+      }
+
+      // Добавляем сам URL как ссылку
+      segments.push(
+        <a
+          key={index}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="title"
+        >
+          {url}
+        </a>
+      );
+
+      lastIndex = index + url.length;
+    }
+
+    // Если после последнего совпадения остался обычный текст
+    if (lastIndex < text.length) {
+      segments.push(text.slice(lastIndex));
+    }
+
+    // Если не найдено ни одного URL, просто возвращаем исходную строку
+    return segments.length > 0 ? segments : text;
   };
 
   if (items.length === 0) {
@@ -86,9 +122,9 @@ const GoalsList: React.FC<Props> = ({ entries, onRemove, onReorder }) => {
         strategy={verticalListSortingStrategy}
       >
         <ul className="wishlist-entries">
-          {items.map((goal) => (
+          {items.map(goal => (
             <SortableItem key={goal.id} id={goal.id}>
-              <span className="title">{goal.title}</span>
+              <span className="title">{renderTitle(goal.title)}</span>
               <div className="actions">
                 <button
                   className="complete-btn"
@@ -108,7 +144,6 @@ const GoalsList: React.FC<Props> = ({ entries, onRemove, onReorder }) => {
 
 export default GoalsList;
 
-/** Отдельный компонент для каждого <li> */
 interface SortableItemProps {
   id: string;
   children: React.ReactNode;
