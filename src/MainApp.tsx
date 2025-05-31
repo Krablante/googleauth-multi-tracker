@@ -9,8 +9,8 @@ import ResourcesList from './components/ResourcesList';
 import GoalsList from './components/GoalsList'; 
 import { useEntries } from './hooks/useEntries';
 import { useResources } from './hooks/useResources';
+import { useGoals } from './hooks/useGoals';     // <— здесь
 import { useAuth } from './contexts/AuthContext';
-import { Entry } from './types';
 import ImportExportModal from './components/ImportExportModal';
 
 const MainApp: React.FC = () => {
@@ -30,7 +30,7 @@ const MainApp: React.FC = () => {
   const { entries, addEntry, removeEntry, error: entryError } = useEntries();
   const filteredEntries = entries.filter(e => e.category === category);
 
-  const markAsDone = async (entry: Entry) => {
+  const markAsDone = async (entry: any) => {
     const targetCat: Category =
       entry.category === 'read_wish' ? 'read' : 'films';
     const today = new Date().toISOString().slice(0, 10);
@@ -43,7 +43,7 @@ const MainApp: React.FC = () => {
     resources,
     addResource,
     removeResource,
-    updateOrder,
+    updateOrder: updateResourceOrder,
     error: resourceError
   } = useResources();
 
@@ -52,9 +52,18 @@ const MainApp: React.FC = () => {
     const current = resources.find(r => r.id === id);
     const other = resources.find(r => r.id === otherId);
     if (!current || !other) return;
-    await updateOrder(current.id, other.order);
-    await updateOrder(other.id, current.order);
+    await updateResourceOrder(current.id, other.order);
+    await updateResourceOrder(other.id, current.order);
   };
+
+  // Goals (отдельная коллекция)
+  const {
+    goals,
+    addGoal,
+    removeGoal,
+    updateOrder: updateGoalOrder,
+    error: goalsError,
+  } = useGoals();
 
   const avatarSrc = user?.photoURL || '/default-U-icon.svg';
 
@@ -108,10 +117,24 @@ const MainApp: React.FC = () => {
           />
         </>
       ) : category === 'goals' ? (
-        // Goals
+        // Goals (отдельная коллекция)
         <>
-          <EntryForm activeCategory="goals" onAdd={addEntry} />
-          <GoalsList entries={filteredEntries} onRemove={removeEntry} />
+          <EntryForm
+            activeCategory="goals"
+            onAdd={({ title }) => {
+              addGoal({ title, order: 0 });
+            }}
+          />
+          {goalsError && <div className="error">Ошибка: {goalsError}</div>}
+          <GoalsList
+            entries={goals}
+            onRemove={removeGoal}
+            onReorder={(newOrderIds: string[]) => {
+              newOrderIds.forEach((id, idx) => {
+                updateGoalOrder(id, idx);
+              });
+            }}
+          />
         </>
       ) : (
         <>

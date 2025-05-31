@@ -685,3 +685,19 @@ html[data-theme="light"] .complete-btn:hover {
   text-align: center;
   margin-bottom: 1rem;
 }
+
+/* Добавляем курсоры для драг&дропа целей */
+.wishlist-item {
+  cursor: grab;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.wishlist-item:active {
+  cursor: grabbing;
+}
+
+/* Если хотите подсветку при DragOver (необязательно) */
+.wishlist-item.drag-over {
+  background: var(--date-input-hover);
+  box-shadow: 0 4px 8px var(--card-shadow);
+}
+

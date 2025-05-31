@@ -1,4 +1,5 @@
 // src/services/firestoreEntryService.ts
+
 import { EntryService } from './entryService';
 import { Entry } from '../types';
 import {
@@ -12,6 +13,7 @@ import {
   doc,
   serverTimestamp,
   orderBy,
+  updateDoc,
 } from 'firebase/firestore';
 
 export class FirestoreEntryService implements EntryService {
@@ -43,7 +45,7 @@ export class FirestoreEntryService implements EntryService {
   }
 
   async add(entry: Omit<Entry, 'id'>): Promise<Entry> {
-    // добавляем запись с серверным timestamp
+    // теперь просто всегда создаём документ в «readings»
     const ref = await addDoc(collection(this.db, 'readings'), {
       owner: this.uid,
       ...entry,
@@ -54,5 +56,10 @@ export class FirestoreEntryService implements EntryService {
 
   async remove(id: string): Promise<void> {
     await deleteDoc(doc(this.db, 'readings', id));
+  }
+
+  async updateOrder(id: string, newOrder: number): Promise<void> {
+    const refDoc = doc(this.db, 'readings', id);
+    await updateDoc(refDoc, { order: newOrder });
   }
 }

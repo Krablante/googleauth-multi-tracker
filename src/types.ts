@@ -4,17 +4,26 @@ import { Timestamp } from 'firebase/firestore';
 
 export interface Entry {
   id: string;
-  date: string;              // YYYY-MM-DD — для обычных категорий
+  date: string;              // YYYY-MM-DD
   title: string;
   category: Category;
   createdAt?: Timestamp;
 }
 
-// Новый интерфейс для хранения ресурсов (news, сайты и пр.)
+
+export interface Goal {
+    id: string;
+    title: string;
+    order: number;     
+    createdAt?: Timestamp;
+  }
+  // --------------------------------------------------
+
+// news
 export interface ResourceEntry {
   id: string;
   title: string;
   url: string;
-  order: number;            // Порядок отображения
-  createdAt?: Timestamp;     // Для первичной сортировки
+  order: number;     
+  createdAt?: Timestamp;
 }

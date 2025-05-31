@@ -1,13 +1,16 @@
 // src/App.tsx
+
 import React from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { EntryServiceProvider } from './contexts/EntryServiceContext';
 import { ResourceServiceProvider } from './contexts/ResourceServiceContext';
+import { GoalServiceProvider } from './contexts/GoalServiceContext';
 import MainApp from './MainApp';
 
 function AppInner() {
   const { user, loading, signIn } = useAuth();
 
+  // 1) Если ещё идёт проверка авторизации — показываем спиннер
   if (loading) {
     return (
       <div className="loading-screen">
@@ -16,6 +19,7 @@ function AppInner() {
     );
   }
 
+  // 2) Если пользователь не залогинен — показываем экран входа
   if (!user) {
     return (
       <div className="login-screen">
@@ -30,10 +34,14 @@ function AppInner() {
     );
   }
 
+  // 3) Как только user !== null, можно безопасно монтировать провайдеры,
+  //    которые требуют наличия user (EntryService, ResourceService, GoalService)
   return (
     <EntryServiceProvider>
       <ResourceServiceProvider>
-        <MainApp />
+        <GoalServiceProvider>
+          <MainApp />
+        </GoalServiceProvider>
       </ResourceServiceProvider>
     </EntryServiceProvider>
   );
