@@ -701,3 +701,14 @@ html[data-theme="light"] .complete-btn:hover {
   box-shadow: 0 4px 8px var(--card-shadow);
 }
 
+/* Плавный переход трансформации и прозрачности */
+.wishlist-item {
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+/* Чтобы список не «дергался» при placeholder */
+.wishlist-entries {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}

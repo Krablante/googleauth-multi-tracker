@@ -6,10 +6,10 @@ import EntriesList from './components/EntriesList';
 import WishlistEntriesList from './components/WishlistEntriesList';
 import ResourceForm from './components/ResourceForm';
 import ResourcesList from './components/ResourcesList';
-import GoalsList from './components/GoalsList'; 
+import GoalsList from './components/GoalsList';
 import { useEntries } from './hooks/useEntries';
 import { useResources } from './hooks/useResources';
-import { useGoals } from './hooks/useGoals';     // <— здесь
+import { useGoals } from './hooks/useGoals';
 import { useAuth } from './contexts/AuthContext';
 import ImportExportModal from './components/ImportExportModal';
 
@@ -44,19 +44,10 @@ const MainApp: React.FC = () => {
     addResource,
     removeResource,
     updateOrder: updateResourceOrder,
-    error: resourceError
+    error: resourceError,
   } = useResources();
 
-  // swap elements
-  const swapResourceOrder = async (id: string, otherId: string) => {
-    const current = resources.find(r => r.id === id);
-    const other = resources.find(r => r.id === otherId);
-    if (!current || !other) return;
-    await updateResourceOrder(current.id, other.order);
-    await updateResourceOrder(other.id, current.order);
-  };
-
-  // Goals (отдельная коллекция)
+  // Goals
   const {
     goals,
     addGoal,
@@ -113,11 +104,14 @@ const MainApp: React.FC = () => {
           <ResourcesList
             entries={resources}
             onRemove={removeResource}
-            onSwap={swapResourceOrder}
+            onReorder={(newOrderIds: string[]) => {
+              newOrderIds.forEach((id, idx) => {
+                updateResourceOrder(id, idx);
+              });
+            }}
           />
         </>
       ) : category === 'goals' ? (
-        // Goals (отдельная коллекция)
         <>
           <EntryForm
             activeCategory="goals"
